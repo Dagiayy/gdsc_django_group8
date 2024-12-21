@@ -1,0 +1,73 @@
+def get_input_text():
+    text = input("Enter a paragraph of text: ")
+    return text
+
+def tokenize_text(text):
+    words = text.split()  
+    return words
+
+
+
+def calculate_word_frequency(words):
+    word_freq = {} 
+    for word in words:
+        word = word.lower()  
+        word_freq[word] = word_freq.get(word, 0) + 1
+    return word_freq
+
+
+
+def display_word_frequencies(word_freq):
+   
+    sorted_word_freq = sorted(word_freq.items(), key=lambda x: x[1], reverse=True)
+    
+    print("\n--- Word Frequencies ---")
+    for word, freq in sorted_word_freq:
+        print(f"{word}: {freq}")
+
+
+
+def top_n_words(word_freq, n):
+ 
+    sorted_word_freq = sorted(word_freq.items(), key=lambda x: x[1], reverse=True)[:n]
+    
+    print(f"\n--- Top {n} Words ---")
+    for word, freq in sorted_word_freq:
+        print(f"{word}: {freq}")
+
+
+
+def word_search(word_freq):
+    word_to_search = input("\nEnter a word to search: ").lower() 
+    if word_to_search in word_freq:
+        print(f"The word '{word_to_search}' appears {word_freq[word_to_search]} times.")
+    else:
+        print(f"The word '{word_to_search}' is not found in the text.")
+
+
+
+def main():
+   
+    text = get_input_text()
+
+   
+    words = tokenize_text(text)
+
+    word_freq = calculate_word_frequency(words)
+
+
+    display_word_frequencies(word_freq)
+
+
+    try:
+        n = int(input("\nEnter the number N to see the top N most frequent words: "))
+        top_n_words(word_freq, n)
+    except ValueError:
+        print("Invalid input for N. Please enter a valid number.")
+
+
+    word_search(word_freq)
+
+
+if __name__ == "__main__":
+    main()
